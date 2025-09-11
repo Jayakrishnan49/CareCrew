@@ -11,20 +11,23 @@ class LoginTop extends StatelessWidget {
         SizedBox(height: 60,),
         Text('Login',
           style: TextStyle(
-          color: AppColors.textColor,
-          fontSize: 25,
+          color: AppColors.primary,
+          fontSize: 30,
           fontWeight: FontWeight.bold,
+          fontFamily: 'DancingScript',
           ),
         ),
         SizedBox(height: 15),
-        Text('Welcome Back, You Have Been\n Missed For Long Time',
+        Text('You have been missed !!',
         textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: AppColors.hintText,
+              color: AppColors.grey,
+              fontFamily: 'DancingScript',
             ),
-        )
+        ),
+        SizedBox(height: 30,)
       ],
     );
   }

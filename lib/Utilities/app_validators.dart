@@ -1,6 +1,6 @@
-class FormValidators {
+class AppValidators {
 
-    String? validateEmail(String? value) {
+  String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required';
     } else if (!RegExp(
@@ -11,7 +11,7 @@ class FormValidators {
     return null;
   }
 
-     String? validatePassword(String? value) {
+  String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password is required';
     } else if (value.length < 6) {
@@ -19,6 +19,18 @@ class FormValidators {
     }
     return null;
   }
+
+
+  // Phone Number Validator
+  String? validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Phone number is required';
+    } else if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+      return 'Please enter a valid 10-digit phone number';
+    }
+    return null;
+  }
   
+
 
 }

@@ -8,7 +8,7 @@ class SignupTop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 60,),
+        SizedBox(height: 20,),
         CircleAvatar(
           radius: 50,
           backgroundColor: AppColors.primary,
@@ -18,9 +18,10 @@ class SignupTop extends StatelessWidget {
         Text(
           'Hello User !',
           style: TextStyle(
-            color: AppColors.textColor,
-            fontSize: 25,
+            color: AppColors.primary,
+            fontSize: 30,
             fontWeight: FontWeight.bold,
+            fontFamily: 'DancingScript',
           ),
         ),
         SizedBox(height: 15),
@@ -33,6 +34,7 @@ class SignupTop extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: AppColors.hintText,
+              fontFamily: 'DancingScript',
             ),
           ),
         ),

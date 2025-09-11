@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:project_2/Controllers/Auth%20Provider/auth_provider.dart';
-import 'package:project_2/Utilities/form_validators.dart';
+import 'package:project_2/Utilities/app_validators.dart';
 import 'package:project_2/View/Auth/Login%20screen/login_main.dart';
 import 'package:project_2/Widgets/custom_button.dart';
 import 'package:project_2/Widgets/custom_text_form_field.dart';
@@ -16,8 +16,8 @@ class SignupRegistration extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
     final formKey=GlobalKey<FormState>();
-    FormValidators formValidators=FormValidators();
-    final userProvider = Provider.of<AuthProvider>(context, listen: false);
+    AppValidators formValidators=AppValidators();
+    final userProvider = Provider.of<UserAuthProvider>(context, listen: false);
 
     return Form(
       key: formKey,
