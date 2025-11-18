@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:project_2/Constants/app_color.dart';
 
+import 'package:flutter/material.dart';
+import 'package:project_2/constants/app_color.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback? onTap;
@@ -23,35 +23,45 @@ class CustomButton extends StatelessWidget {
     this.borderRadius,
     this.textColor,
     this.icon,
-    this.borderColor
+    this.borderColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: height ?? 60,
-        width: width ?? 200,
-        decoration: BoxDecoration(
-          color: color ?? AppColors.buttonColor,
-          borderRadius: BorderRadius.circular(borderRadius ?? 50),
-          border: Border.all(color:borderColor?? AppColors.primary),
-        ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (icon != null) const SizedBox(width: 10),
-              Text(text,
-                  style: TextStyle(
-                    color: textColor ?? Colors.white,
-                    fontSize: 18,
-                  )),
-            ],
+    return SizedBox(
+      height: height ?? 60,
+      width: width ?? 200,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(
+            color ?? AppColors.buttonColor,
           ),
+          foregroundColor: WidgetStateProperty.all(
+            textColor ?? Colors.white,
+          ),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius ?? 50),
+              side: BorderSide(color: borderColor ?? AppColors.buttonColor),
+            ),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null) ...[
+              icon!,
+              const SizedBox(width: 8),
+            ],
+            Text(
+              text,
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+

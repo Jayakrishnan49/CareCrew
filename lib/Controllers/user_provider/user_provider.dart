@@ -1,6 +1,6 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_2/model/user_model.dart';
@@ -47,18 +47,31 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // CREATE user (includes _imagePath and _gender from UI)
-  Future<void> saveUser(UserModel user) async {
-    final updatedUser = user.copyWith(
-      profilePhoto: _imagePath ?? user.profilePhoto,
-      gender: _gender ?? user.gender,
-    );
+Future<void> saveUser(UserModel user) async {
+  String imageUrl;
 
-    await _userService.createOrUpdateUser(updatedUser);
-    _currentUser = updatedUser;
-    log(updatedUser.email);
-    notifyListeners();
+  if (_imagePath != null && _imagePath!.isNotEmpty) {
+    // Upload user-selected image
+    final uploadedUrl = await uploadImageToCloudinary(_imagePath!);
+    imageUrl = uploadedUrl ?? "https://res.cloudinary.com/dq4gjskwm/image/upload/v1759235279/default_profile_x437jc.png";
+  } else {
+    // Use default image if user didn't select any
+    imageUrl = "https://res.cloudinary.com/dq4gjskwm/image/upload/v1759235279/default_profile_x437jc.png"; // ✅ Replace with your Cloudinary URL
   }
+
+  final updatedUser = user.copyWith(
+    profilePhoto: imageUrl, 
+    gender: _gender ?? user.gender,
+  );
+
+  await _userService.createOrUpdateUser(updatedUser);
+  _currentUser = updatedUser;
+  log(updatedUser.email);
+  notifyListeners();
+}
+
+
+
 
   // UPDATE user (includes _imagePath and _gender from UI)
   Future<void> updateUser(Map<String, dynamic> updates) async {
@@ -110,4 +123,26 @@ class UserProvider extends ChangeNotifier {
       return null;
     }
   }
+
+
+Future<String?> uploadImageToCloudinary(String imagePath) async {
+  final cloudinary = CloudinaryPublic(
+    'dq4gjskwm', 
+    'user_profile_image',
+    cache: false,
+  );
+
+  try {
+    CloudinaryResponse response = await cloudinary.uploadFile(
+      CloudinaryFile.fromFile(
+        imagePath,
+        resourceType: CloudinaryResourceType.Image,
+      ),
+    );
+    return response.secureUrl; // This URL will be stored in Firestore
+  } catch (e) {
+    debugPrint("Cloudinary upload error: $e");
+    return null;
+  }
+}
 }

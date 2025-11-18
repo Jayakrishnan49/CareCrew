@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/Constants/app_color.dart';
+import 'package:project_2/constants/app_color.dart';
 import 'package:project_2/Widgets/image_picker.dart';
 
 // import 'image_picker_util.dart'; // Import the utility

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_2/Constants/app_color.dart';
-import 'package:project_2/Controllers/Custom%20Textform%20Field%20Provider/custom_text_form_field_provider.dart';
+import 'package:project_2/constants/app_color.dart';
+import 'package:project_2/controllers/custom_textform_field_provider/custom_text_form_field_provider.dart';
 import 'package:provider/provider.dart';
 
 class CustomTextFormField extends StatelessWidget {

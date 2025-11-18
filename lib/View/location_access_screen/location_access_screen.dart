@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/Constants/app_color.dart';
-import 'package:project_2/View/BottomNav/bottom_nav_screen.dart';
+import 'package:project_2/constants/app_color.dart';
+import 'package:project_2/View/bottom_nav/bottom_nav_screen.dart';
 import 'package:project_2/Widgets/custom_button.dart';
 
 class LocationAccessScreen extends StatelessWidget {

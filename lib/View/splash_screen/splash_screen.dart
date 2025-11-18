@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/Constants/app_color.dart';
-import 'package:project_2/Controllers/Auth%20Provider/auth_provider.dart';
-import 'package:project_2/View/Auth/Login%20screen/login_main.dart';
+import 'package:project_2/View/auth/login_screen/login_main.dart';
+import 'package:project_2/constants/app_color.dart';
+import 'package:project_2/controllers/auth_provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../BottomNav/bottom_nav_screen.dart';
+import '../bottom_nav/bottom_nav_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -65,7 +65,7 @@ class SplashScreen extends StatelessWidget {
             
             SizedBox(height: 40),
             Text(
-              'Care Crew',
+              'GoServe',
               style: TextStyle(
                 fontSize: 50,
                 fontWeight: FontWeight.bold,

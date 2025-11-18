@@ -1,7 +1,6 @@
-import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_2/Controllers/user_provider/user_provider.dart';
+import 'package:project_2/controllers/user_provider/user_provider.dart';
 import 'package:project_2/Utilities/app_validators.dart';
 import 'package:project_2/View/location_access_screen/location_access_screen.dart';
 import 'package:project_2/Widgets/custom_button.dart';
@@ -9,7 +8,6 @@ import 'package:project_2/Widgets/custom_text_form_field.dart';
 import 'package:project_2/model/user_model.dart';
 import 'package:provider/provider.dart';
 
-import '../BottomNav/bottom_nav_screen.dart';
 
 class AddAccountForm extends StatelessWidget {
   const AddAccountForm({super.key});
@@ -125,63 +123,61 @@ class AddAccountForm extends StatelessWidget {
           ),
 
           const SizedBox(height: 60),
-          CustomButton(
-            width: 400,
-            onTap: () async {
-              if (formKey.currentState!.validate()) {
-                final user = _auth.currentUser;
-                if (user == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("User not logged in")),
-                  );
-                  return;
-                }
+CustomButton(
+  width: 400,
+  onTap: () async {
+    if (formKey.currentState!.validate()) {
+      final user = _auth.currentUser;
+      if (user == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("User not logged in")),
+        );
+        return;
+      }
 
-                // Get the current gender from UserProvider
-                final userProvider = Provider.of<UserProvider>(context, listen: false);
-                
-                // Validate that gender is selected
-                if (userProvider.gender == null || userProvider.gender!.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Please select a gender")),
-                  );
-                  return;
-                }
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-                final userModel = UserModel(
-                  userId: user.uid,
-                  profilePhoto: userProvider.imagePath ?? "", // Use selected image or empty string
-                  name: nameController.text,
-                  gender: userProvider.gender!, // Fixed: use actual gender from provider
-                  phoneNumber: phoneNumberController.text,
-                  email: emailController.text,
-                );
-                
-                log(userModel.userId);
-                
-                try {
-                  await userProvider.saveUser(userModel);
-                  
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Account created')),
-                    );
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) =>  LocationAccessScreen()),
-                    );
-                  }
-                } catch (e) {
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Error: $e')),
-                    );
-                  }
-                }
-              }
-            },
-            text: 'Save',
-            borderRadius: 15,
-          ),
+      if (userProvider.gender == null || userProvider.gender!.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please select a gender")),
+        );
+        return;
+      }
+
+      final userModel = UserModel(
+        userId: user.uid,
+        profilePhoto: userProvider.imagePath ?? "", // provider will handle upload/default
+        name: nameController.text,
+        gender: userProvider.gender!,
+        phoneNumber: phoneNumberController.text,
+        email: emailController.text,
+      );
+
+      try {
+        await userProvider.saveUser(userModel);
+
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Account created')),
+          );
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => LocationAccessScreen()),
+          );
+        }
+      } catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error: $e')),
+          );
+        }
+      }
+    }
+  },
+  text: 'Save',
+  borderRadius: 15,
+)
+
+
         ],
       ),
     );

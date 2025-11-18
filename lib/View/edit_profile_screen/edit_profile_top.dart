@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/Controllers/user_provider/user_provider.dart';
-import 'package:project_2/View/add_account_screen/widgets/profile_picture_picker.dart';
+import 'package:project_2/controllers/user_provider/user_provider.dart';
+import 'package:project_2/view/add_account_screen/widgets/profile_picture_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditProfileTop extends StatelessWidget {

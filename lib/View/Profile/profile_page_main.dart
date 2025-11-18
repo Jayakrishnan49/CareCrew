@@ -1,79 +1,169 @@
+
 import 'package:flutter/material.dart';
-import 'package:project_2/Constants/app_color.dart';
-import 'package:project_2/View/Auth/Login%20screen/login_main.dart';
-import 'package:project_2/View/Profile/profile_avatar_section.dart';
-import 'package:project_2/Widgets/custom_show_dialog.dart';
+import 'package:flutter/rendering.dart';
+import 'package:project_2/View/profile/about_app_section.dart';
+import 'package:project_2/View/profile/general_section.dart';
+import 'package:project_2/View/profile/logout_button.dart';
+import 'package:project_2/View/profile/profile_header.dart';
+import 'package:project_2/constants/app_color.dart';
+import 'package:project_2/controllers/bottom_nav_provider/bottom_nav_provider.dart';
 import 'package:provider/provider.dart';
-import '../../Controllers/Auth Provider/auth_provider.dart';
+
 
 class ProfilePageMain extends StatelessWidget {
   const ProfilePageMain({super.key});
 
   @override
   Widget build(BuildContext context) {
-     final userProvider = Provider.of<UserAuthProvider>(context, listen: true);
-    return  SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.secondary,
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                ProfileAvatarSection(),
-                SizedBox(height: 50,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.logout,color: Colors.red,),
-                    SizedBox(width: 10,),
-                    InkWell(
-                      onTap: () {
-                        showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CustomShowDialog(
-                      title: 'Oh No, You Are Leaving...',
-                      subTitle: 'Are you sure want to logout',
-                      // icon: Icon(Icons.logout, color: Colors.red),
-                      buttonLeft: 'No',
-                      buttonRight: 'Yes',
-                      onTap: () async {
-                        userProvider.logout();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => LoginMain()),
-                        );
-                      },
-                    );
-                  },
-                );
-                      },
-                      child: Text('LogOut',style: TextStyle(
-                        fontSize: 18
-                      ),),
-                    )
-                  ],
-                )
-              ],
+    return Scaffold(
+      backgroundColor: AppColors.secondary,
+      body: NotificationListener<UserScrollNotification>(
+        onNotification: (notification) {
+          final navProvider = Provider.of<NavigationProvider>(context, listen: false);
+          if (notification.direction == ScrollDirection.reverse) {
+            navProvider.hideBottomNav();
+          } else if (notification.direction == ScrollDirection.forward) {
+            navProvider.showBottomNav();
+          }
+          return true;
+        },
+        child: Column(
+          children: [
+            const ProfileHeader(),
+            const SizedBox(height: 24),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GeneralSection(),
+                      const SizedBox(height: 28),
+                      AboutAppSection(),
+                      const SizedBox(height: 32),
+                      const LogoutButton(),
+                      const SizedBox(height: 32),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-        // appBar: AppBar(title: Text('Profile'),
-        //   actions: [
-        //     IconButton(onPressed: (){
-        //   userProvider.logout();
-        //   Navigator.of(context).push(MaterialPageRoute(builder:(context) => LoginMain(),));
-        //   }, 
-        //   icon: Icon(Icons.logout,color: Colors.red,))
-        //   ],
-        // ),
-        // body: Center(
-        //   child: Column(
-        //     children: [
-              
-        //     ],
-        //   ),
-        // ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+class ChangePasswordPage extends StatelessWidget {
+  const ChangePasswordPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Change Password'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Text('Change Password Page'),
+      ),
+    );
+  }
+}
+
+class RateUsPage extends StatelessWidget {
+  const RateUsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Rate Us'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Text('Rate Us Page'),
+      ),
+    );
+  }
+}
+
+class PrivacyPolicyPage extends StatelessWidget {
+  const PrivacyPolicyPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Privacy Policy'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Text('Privacy Policy Page'),
+      ),
+    );
+  }
+}
+
+class TermsConditionsPage extends StatelessWidget {
+  const TermsConditionsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Terms & Conditions'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Text('Terms & Conditions Page'),
+      ),
+    );
+  }
+}
+
+class HelpSupportPage extends StatelessWidget {
+  const HelpSupportPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Help Support'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Text('Help Support Page'),
+      ),
+    );
+  }
+}
+
+class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('About'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Text('About Page'),
       ),
     );
   }

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:project_2/Controllers/user_provider/user_provider.dart';
+import 'package:project_2/controllers/user_provider/user_provider.dart';
 import 'package:project_2/View/Home_screen/home_screen_main.dart';
 
 import 'package:provider/provider.dart';

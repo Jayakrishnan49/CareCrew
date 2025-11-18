@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:project_2/Constants/app_color.dart';
+import 'package:project_2/constants/app_color.dart';
 import 'package:project_2/Widgets/custom_bottom_sheet.dart';
 
 class ProfilePicturePicker extends StatelessWidget {
