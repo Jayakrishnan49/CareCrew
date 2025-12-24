@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:project_2/view/home_screen/home_screen_components/service_provider_list_section/service_provider_card.dart';
 import 'package:project_2/constants/app_color.dart';
 import 'package:project_2/controllers/service_provider_details_provider/service_provider_details_provider.dart';
+import 'package:project_2/view/view_all_service_provider_screen/view_all_service_provider_screen.dart';
 import 'package:provider/provider.dart';
 
 class ServiceProviderList extends StatelessWidget {
@@ -38,7 +39,9 @@ class ServiceProviderList extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAllServiceProviderScreen(),));
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   padding:
@@ -74,7 +77,7 @@ class ServiceProviderList extends StatelessWidget {
                           final providerData = providers[index];
                           return AnimationConfiguration.staggeredList(
                             position: index,
-                            duration: const Duration(milliseconds: 2000),
+                            duration: const Duration(milliseconds: 3000),
                             child: SlideAnimation(
                               horizontalOffset: 10,
                               child: FadeInAnimation(

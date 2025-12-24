@@ -1,159 +1,3 @@
-// // profile_header.dart
-// import 'package:flutter/material.dart';
-// import 'package:project_2/constants/app_color.dart';
-
-// class ProfileHeader extends StatelessWidget {
-//   const ProfileHeader({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: double.infinity,
-//       decoration: BoxDecoration(
-//         borderRadius: const BorderRadius.only(
-//           bottomLeft: Radius.circular(100),
-//           bottomRight: Radius.circular(100),
-//         ),
-//         gradient: LinearGradient(
-//           begin: Alignment.topCenter,
-//           end: Alignment.bottomCenter,
-//           colors: [
-//             AppColors.primary,
-//             AppColors.primary.withValues(alpha: 0.9),
-//           ],
-//         ),
-//         boxShadow: [
-//           BoxShadow(
-//             color: AppColors.primary.withValues(alpha: 0.3),
-//             blurRadius: 20,
-//             offset: const Offset(0, 10),
-//           ),
-//         ],
-//       ),
-//       child: SafeArea(
-//         bottom: false,
-//         child: Padding(
-//           padding: const EdgeInsets.only(bottom: 40),
-//           child: Column(
-//             children: [
-//               const SizedBox(height: 20),
-//               _buildProfileImage(),
-//               const SizedBox(height: 20),
-//               _buildName(),
-//               const SizedBox(height: 8),
-//               _buildEmail(),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildProfileImage() {
-//     return Stack(
-//       children: [
-//         Container(
-//           width: 130,
-//           height: 130,
-//           decoration: BoxDecoration(
-//             shape: BoxShape.circle,
-//             border: Border.all(
-//               color: Colors.white.withValues(alpha: 0.3),
-//               width: 4,
-//             ),
-//             gradient: const LinearGradient(
-//               begin: Alignment.topLeft,
-//               end: Alignment.bottomRight,
-//               colors: [
-//                 Color(0xFFFF4444),
-//                 Color(0xFFDD2222),
-//               ],
-//             ),
-//             boxShadow: [
-//               BoxShadow(
-//                 color: Colors.black.withValues(alpha: 0.2),
-//                 blurRadius: 15,
-//                 offset: const Offset(0, 8),
-//               ),
-//             ],
-//           ),
-//           child: const Center(
-//             child: Icon(
-//               Icons.person,
-//               size: 70,
-//               color: Colors.black54,
-//             ),
-//           ),
-//         ),
-//         Positioned(
-//           bottom: 5,
-//           right: 5,
-//           child: Container(
-//             width: 40,
-//             height: 40,
-//             decoration: BoxDecoration(
-//               color: AppColors.secondary,
-//               shape: BoxShape.circle,
-//               border: Border.all(
-//                 color: AppColors.primary,
-//                 width: 3,
-//               ),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: Colors.black.withValues(alpha: 0.15),
-//                   blurRadius: 8,
-//                   offset: const Offset(0, 4),
-//                 ),
-//               ],
-//             ),
-//             child: Icon(
-//               Icons.edit_rounded,
-//               size: 20,
-//               color: AppColors.primary,
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildName() {
-//     return const Text(
-//       'Ashutosh Pandey',
-//       style: TextStyle(
-//         fontSize: 26,
-//         fontWeight: FontWeight.bold,
-//         color: Colors.white,
-//         letterSpacing: 0.5,
-//       ),
-//     );
-//   }
-
-//   Widget _buildEmail() {
-//     return Container(
-//       padding: const EdgeInsets.symmetric(
-//         horizontal: 16,
-//         vertical: 8,
-//       ),
-//       decoration: BoxDecoration(
-//         color: Colors.white.withValues(alpha: 0.2),
-//         borderRadius: BorderRadius.circular(20),
-//       ),
-//       child: const Text(
-//         'ashutosh@amitcorpo.com',
-//         style: TextStyle(
-//           fontSize: 15,
-//           color: Colors.white,
-//           fontWeight: FontWeight.w500,
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
 
 
 import 'package:flutter/material.dart';
@@ -225,61 +69,144 @@ class ProfileHeader extends StatelessWidget {
   }
 
   Widget _buildProfileImage(String imageUrl) {
-    return Stack(
-      children: [
-        Container(
-          width: 130,
-          height: 130,
+  return Stack(
+    children: [
+      Container(
+        width: 130,
+        height: 130,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: Colors.white.withOpacity(0.3),
+            width: 4,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: ClipOval(
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Container(
+                color: Colors.grey.shade300,
+                child: const Icon(
+                  Icons.person,
+                  size: 50,
+                  color: Colors.white,
+                ),
+              );
+            },
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: Colors.grey.shade300,
+                child: const Icon(
+                  Icons.person,
+                  size: 50,
+                  color: Colors.white,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+
+      // Edit button
+      Positioned(
+        bottom: 5,
+        right: 5,
+        child: Container(
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
+            color: AppColors.secondary,
             shape: BoxShape.circle,
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.3),
-              width: 4,
+              color: AppColors.primary,
+              width: 3,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.2),
-                blurRadius: 15,
-                offset: const Offset(0, 8),
+                color: Colors.black.withOpacity(0.15),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
               ),
             ],
-            image: DecorationImage(
-              image: NetworkImage(imageUrl),
-              fit: BoxFit.cover,
-            ),
+          ),
+          child: Icon(
+            Icons.edit_rounded,
+            size: 20,
+            color: AppColors.primary,
           ),
         ),
-        Positioned(
-          bottom: 5,
-          right: 5,
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.secondary,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: AppColors.primary,
-                width: 3,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Icon(
-              Icons.edit_rounded,
-              size: 20,
-              color: AppColors.primary,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
+
+
+  // Widget _buildProfileImage(String imageUrl) {
+  //   return Stack(
+  //     children: [
+  //       Container(
+  //         width: 130,
+  //         height: 130,
+  //         decoration: BoxDecoration(
+  //           shape: BoxShape.circle,
+  //           border: Border.all(
+  //             color: Colors.white.withValues(alpha: 0.3),
+  //             width: 4,
+  //           ),
+  //           boxShadow: [
+  //             BoxShadow(
+  //               color: Colors.black.withValues(alpha: 0.2),
+  //               blurRadius: 15,
+  //               offset: const Offset(0, 8),
+  //             ),
+  //           ],
+  //           image: DecorationImage(
+  //             image: NetworkImage(imageUrl),
+  //             fit: BoxFit.cover,
+  //           ),
+  //         ),
+  //       ),
+  //       Positioned(
+  //         bottom: 5,
+  //         right: 5,
+  //         child: Container(
+  //           width: 40,
+  //           height: 40,
+  //           decoration: BoxDecoration(
+  //             color: AppColors.secondary,
+  //             shape: BoxShape.circle,
+  //             border: Border.all(
+  //               color: AppColors.primary,
+  //               width: 3,
+  //             ),
+  //             boxShadow: [
+  //               BoxShadow(
+  //                 color: Colors.black.withValues(alpha: 0.15),
+  //                 blurRadius: 8,
+  //                 offset: const Offset(0, 4),
+  //               ),
+  //             ],
+  //           ),
+  //           child: Icon(
+  //             Icons.edit_rounded,
+  //             size: 20,
+  //             color: AppColors.primary,
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildEmail(String email) {
     return Container(

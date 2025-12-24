@@ -1,5 +1,5 @@
+////////////    userapp      /////////////
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 class ServiceProviderModel {
   final String providerId;
   final String profilePhoto;
@@ -13,6 +13,7 @@ class ServiceProviderModel {
   final String yearsOfexperience;
   final String selectService;
   final String status;
+  final String firstHourPrice;
   final Timestamp? approvedAt;
   
   final double? averageResponseTimeMinutes;
@@ -32,6 +33,7 @@ class ServiceProviderModel {
     required this.yearsOfexperience,
     required this.selectService,
     required this.status,
+    required this.firstHourPrice,
     this.approvedAt,
     this.averageResponseTimeMinutes,
     this.totalResponses = 0,
@@ -89,6 +91,7 @@ class ServiceProviderModel {
       averageResponseTimeMinutes: data['averageResponseTimeMinutes']?.toDouble(),
       totalResponses: data['totalResponses'] ?? 0,
       lastResponseAt: data['lastResponseAt'] as Timestamp?,
+      firstHourPrice: data['firstHourPrice'] ?? '',
     );
   }
 
@@ -110,6 +113,7 @@ class ServiceProviderModel {
       'averageResponseTimeMinutes': averageResponseTimeMinutes,
       'totalResponses': totalResponses,
       'lastResponseAt': lastResponseAt,
+      'firstHourPrice': firstHourPrice,
     };
   }
 
@@ -130,6 +134,7 @@ class ServiceProviderModel {
     double? averageResponseTimeMinutes,
     int? totalResponses,
     Timestamp? lastResponseAt,
+    String? firstHourPrice,
   }) {
     return ServiceProviderModel(
       providerId: userId ?? this.providerId,
@@ -148,6 +153,7 @@ class ServiceProviderModel {
       averageResponseTimeMinutes: averageResponseTimeMinutes ?? this.averageResponseTimeMinutes,
       totalResponses: totalResponses ?? this.totalResponses,
       lastResponseAt: lastResponseAt ?? this.lastResponseAt,
+      firstHourPrice: firstHourPrice ?? this.firstHourPrice,
     );
   }
 }

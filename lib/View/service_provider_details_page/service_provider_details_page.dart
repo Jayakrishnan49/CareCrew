@@ -451,7 +451,7 @@ class ServiceProviderDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '₹${provider.yearsOfexperience}',
+                        '₹${provider.firstHourPrice}',
                         style: const TextStyle(
                           color: Color(0xFF1F2937),
                           fontSize: 28,

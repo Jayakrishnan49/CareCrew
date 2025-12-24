@@ -24,7 +24,7 @@ class ProviderInfoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.textColor.withValues(alpha: 0.05),
+            color: AppColors.textColor.withValues(alpha: 0.15),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),

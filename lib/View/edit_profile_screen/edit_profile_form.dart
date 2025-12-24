@@ -5,10 +5,8 @@ import 'package:project_2/controllers/user_provider/user_provider.dart';
 import 'package:project_2/Utilities/app_validators.dart';
 import 'package:project_2/Widgets/custom_button.dart';
 import 'package:project_2/Widgets/custom_text_form_field.dart';
-import 'package:project_2/model/user_model.dart';
 import 'package:provider/provider.dart';
 
-import '../bottom_nav/bottom_nav_screen.dart';
 
 class EditProfileForm extends StatelessWidget {
   const EditProfileForm({super.key});

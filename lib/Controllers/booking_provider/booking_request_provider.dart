@@ -90,10 +90,10 @@ class BookingRequestProvider extends ChangeNotifier {
         date: _selectedDate!,
         time: _formatTimeOfDay(_selectedTime!),
         address: addressController.text.trim(),
-        //  phoneNumber: provider.phoneNumber,
+        phoneNumber: provider.phoneNumber,
         notes: notesController.text.trim(),
         images: _selectedImages,
-        price: null, // Your model doesn't have price
+        price: provider.firstHourPrice, 
       );
     } catch (e) {
       rethrow;

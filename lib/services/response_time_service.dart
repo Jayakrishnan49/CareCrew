@@ -69,38 +69,86 @@ class ResponseTimeService {
   }
 
   //  Update Provider's Average Response Time
-  Future<void> _updateProviderAverageResponseTime({
-    required String providerId,
-    required int newResponseTimeMinutes,
-  }) async {
-    try {
-      final providerRef = _firestore.collection('users').doc(providerId);
-      final providerDoc = await providerRef.get();
+  // Future<void> _updateProviderAverageResponseTime({
+  //   required String providerId,
+  //   required int newResponseTimeMinutes,
+  // }) async {
+  //   try {
+  //     final providerRef = _firestore.collection('service_provider').doc(providerId);
+  //     final providerDoc = await providerRef.get();
 
-      if (!providerDoc.exists) return;
+  //     if (!providerDoc.exists) return;
 
-      final data = providerDoc.data()!;
-      final currentAverage = (data['averageResponseTimeMinutes'] ?? 0.0).toDouble();
-      final totalResponses = (data['totalResponses'] ?? 0) as int;
+  //     final data = providerDoc.data()!;
+  //     final currentAverage = (data['averageResponseTimeMinutes'] ?? 0.0).toDouble();
+  //     final totalResponses = (data['totalResponses'] ?? 0) as int;
 
-      // Calculate new average
-      // Formula: ((old_average * old_count) + new_value) / (old_count + 1)
-      final newAverage = totalResponses == 0
-          ? newResponseTimeMinutes.toDouble()
-          : ((currentAverage * totalResponses) + newResponseTimeMinutes) / (totalResponses + 1);
+  //     // Calculate new average
+  //     // Formula: ((old_average * old_count) + new_value) / (old_count + 1)
+  //     final newAverage = totalResponses == 0
+  //         ? newResponseTimeMinutes.toDouble()
+  //         : ((currentAverage * totalResponses) + newResponseTimeMinutes) / (totalResponses + 1);
 
-      // Update provider document
-      await providerRef.update({
-        'averageResponseTimeMinutes': newAverage,
-        'totalResponses': totalResponses + 1,
-        'lastResponseAt': Timestamp.now(),
-      });
+  //     // Update provider document
+  //     await providerRef.update({
+  //       'averageResponseTimeMinutes': newAverage,
+  //       'totalResponses': totalResponses + 1,
+  //       'lastResponseAt': Timestamp.now(),
+  //     });
 
-      print('Updated provider average: ${newAverage.toStringAsFixed(1)} mins');
-    } catch (e) {
-      print('Error updating average: $e');
+  //     print('Updated provider average: ${newAverage.toStringAsFixed(1)} mins');
+  //   } catch (e) {
+  //     print('Error updating average: $e');
+  //   }
+  // }
+
+
+  //  Update Provider's Average Response Time
+Future<void> _updateProviderAverageResponseTime({
+  required String providerId,
+  required int newResponseTimeMinutes,
+}) async {
+  try {
+    // ✅ FIXED: Changed from 'users' to 'service_provider'
+    final providerRef = _firestore.collection('service_provider').doc(providerId);
+    final providerDoc = await providerRef.get();
+
+    if (!providerDoc.exists) {
+      print('⚠️ Provider document not found: $providerId');
+      return;
     }
+
+    final data = providerDoc.data()!;
+    final currentAverage = (data['averageResponseTimeMinutes'] ?? 0.0).toDouble();
+    final totalResponses = (data['totalResponses'] ?? 0) as int;
+
+    // Calculate new average
+    // Formula: ((old_average * old_count) + new_value) / (old_count + 1)
+    final newAverage = totalResponses == 0
+        ? newResponseTimeMinutes.toDouble()
+        : ((currentAverage * totalResponses) + newResponseTimeMinutes) / (totalResponses + 1);
+
+    print('📊 Updating provider response stats:');
+    print('Provider ID: $providerId');
+    print('Current average: $currentAverage minutes');
+    print('Total responses: $totalResponses');
+    print('New response time: $newResponseTimeMinutes minutes');
+    print('New average: ${newAverage.toStringAsFixed(1)} minutes');
+    print('New total: ${totalResponses + 1}');
+
+    // Update provider document
+    await providerRef.update({
+      'averageResponseTimeMinutes': newAverage,
+      'totalResponses': totalResponses + 1,
+      'lastResponseAt': Timestamp.now(),
+    });
+
+    print('✅ Provider average updated: ${newAverage.toStringAsFixed(1)} mins');
+  } catch (e) {
+    print('❌ Error updating average: $e');
+    print('Stack trace: ${StackTrace.current}');
   }
+}
 
   //Get Provider's Response Time Stats
   Future<Map<String, dynamic>> getProviderResponseStats(String providerId) async {

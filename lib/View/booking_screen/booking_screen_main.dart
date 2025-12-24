@@ -1,69 +1,69 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:project_2/constants/app_color.dart';
+import 'package:project_2/controllers/bottom_nav_provider/bottom_nav_provider.dart';
 import 'package:project_2/view/booking_screen/booking_list_view.dart';
+import 'package:provider/provider.dart';
 
-class BookingScreen extends StatefulWidget {
+class BookingScreen extends StatelessWidget {
   const BookingScreen({super.key});
 
   @override
-  State<BookingScreen> createState() => _BookingScreenState();
-}
-
-class _BookingScreenState extends State<BookingScreen> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.secondary,
-      appBar: AppBar(
-        title: const Text(
-          'My Bookings',
-          style: TextStyle(
-            color: AppColors.secondary,
-            fontWeight: FontWeight.bold,
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        backgroundColor: AppColors.secondary,
+        appBar: AppBar(
+          title: const Text(
+            'My Bookings',
+            style: TextStyle(
+              color: AppColors.secondary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: AppColors.primary,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          bottom: TabBar(
+            indicatorColor: AppColors.secondary,
+            indicatorWeight: 3,
+            labelColor: AppColors.secondary,
+            unselectedLabelColor: AppColors.secondary.withOpacity(0.6),
+            labelStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+            tabs: const [
+              Tab(text: 'Pending'),
+              Tab(text: 'Accepted'),
+              Tab(text: 'Completed'),
+              Tab(text: 'Rejected',)
+            ],
           ),
         ),
-        backgroundColor: AppColors.primary,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: AppColors.secondary,
-          indicatorWeight: 3,
-          labelColor: AppColors.secondary,
-          unselectedLabelColor: AppColors.secondary.withOpacity(0.6),
-          labelStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+        body: NotificationListener<UserScrollNotification>(
+          onNotification: (notification) {
+                final navProvider =
+                    Provider.of<NavigationProvider>(context, listen: false);
+
+                if (notification.direction == ScrollDirection.reverse) {
+                  navProvider.hideBottomNav();
+                } else if (notification.direction ==
+                    ScrollDirection.forward) {
+                  navProvider.showBottomNav();
+                }
+                return true;
+              },
+          child: const TabBarView(
+            children: [
+              BookingListView(status: 'pending'),
+              BookingListView(status: 'accepted'),
+              BookingListView(status: 'completed'),
+              BookingListView(status: 'rejected'),
+            ],
           ),
-          tabs: const [
-            Tab(text: 'Pending'),
-            Tab(text: 'Accepted'),
-            Tab(text: 'Completed'),
-          ],
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          BookingListView(status: 'pending'),
-          BookingListView(status: 'accepted'),
-          BookingListView(status: 'completed'),
-        ],
       ),
     );
   }

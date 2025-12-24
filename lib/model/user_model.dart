@@ -5,6 +5,9 @@ class UserModel {
   final String gender;
   final String phoneNumber;
   final String email;
+  final double? latitude;
+  final double? longitude;
+  final DateTime? locationUpdatedAt;
 
   UserModel({
     required this.userId,
@@ -12,7 +15,10 @@ class UserModel {
     required this.name,
     required this.gender,
     required this.phoneNumber,
-    required this.email
+    required this.email,
+    this.latitude,
+    this.longitude,
+    this.locationUpdatedAt,
   });
 
   //convert from json
@@ -24,6 +30,11 @@ class UserModel {
       gender: json['gender']??'', 
       phoneNumber: json['phoneNumber']??'', 
       email: json['email']??'',
+      latitude: (json['latitude'] as num?)?.toDouble(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
+      locationUpdatedAt: json['locationUpdatedAt'] != null
+          ? DateTime.parse(json['locationUpdatedAt'])
+          : null,
       );
   }
 
@@ -36,6 +47,9 @@ class UserModel {
       'gender': gender,
       'phoneNumber': phoneNumber,
       'email': email,
+      'latitude': latitude,
+      'longitude': longitude,
+      'locationUpdatedAt': locationUpdatedAt?.toIso8601String(),
     };
   }
 
@@ -46,6 +60,9 @@ class UserModel {
   String? gender,
   String? phoneNumber,
   String? email,
+  double? latitude,
+  double? longitude,
+  DateTime? locationUpdatedAt,
 }) {
   return UserModel(
     userId: userId ?? this.userId,
@@ -53,7 +70,10 @@ class UserModel {
     name: name ?? this.name,
     gender: gender ?? this.gender,
     phoneNumber: phoneNumber ?? this.phoneNumber,
-    email: email ?? this.email,    
+    email: email ?? this.email,
+    latitude: latitude ?? this.latitude,
+    longitude: longitude ?? this.longitude,
+    locationUpdatedAt: locationUpdatedAt ?? this.locationUpdatedAt,    
   );
 }
 }

@@ -70,7 +70,7 @@ class ForgotPassword extends StatelessWidget {
                         shadows: [
                           Shadow(color: AppColors.grey,blurRadius: 30)
                         ],
-                        color: AppColors.success,
+                        color: AppColors.successAlert,
                       ),
                     )
                   ),

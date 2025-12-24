@@ -21,7 +21,8 @@ class BookingService {
     required String address,
     required String notes,
     required List<File> images,
-    double? price,
+    String? price,
+    required String phoneNumber,
   }) async {
     try {
       final currentUser = _auth.currentUser;
@@ -106,7 +107,7 @@ class BookingService {
         'userId': currentUser.uid,
         'userName': userData?['name'] ?? 'Unknown',
         'userProfileImage': userProfileImage,
-        'userPhone': userData?['phone'] ?? '',
+        'userPhone': userData?['phoneNumber'] ?? '',
         'userEmail': currentUser.email ?? '',
         'providerId': providerId,
         'providerName': providerName,
@@ -120,7 +121,7 @@ class BookingService {
         'imageUrls': imageUrls,
         'status': 'pending',
         'createdAt': Timestamp.fromDate(now),
-        'price': price,
+        'price': price != null ? (double.tryParse(price) ?? 0.0) : 0.0,
         'requestSentAt': Timestamp.fromDate(now),
         'responseAt': null,
         'responseTimeMinutes': null,

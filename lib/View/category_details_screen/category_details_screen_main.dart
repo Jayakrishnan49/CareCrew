@@ -38,7 +38,7 @@ class CategoryDetailsScreenMain extends StatelessWidget {
               CategoryDetailsImgSection(
                 imageUrl: work.image, 
                 title: work.name, 
-                price: work.price,
+                // price: work.price,
                 ),
               // Content Section
               Padding(
@@ -124,8 +124,5 @@ class CategoryDetailsScreenMain extends StatelessWidget {
         
       );
   }
-
-
-
 
 }

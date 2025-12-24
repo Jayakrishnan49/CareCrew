@@ -36,7 +36,7 @@ class PriceSummaryCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '₹${provider.yearsOfexperience}',
+                '₹${provider.firstHourPrice}',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
